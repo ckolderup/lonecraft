@@ -51,7 +51,7 @@ DataMapper.auto_upgrade!
 ##### GAMEPLAY #####
 
 get '/pass' do
-  #TODO: get list of tokens they need to pass on, offer to email it to someone but suggest other options
+  #TODO: see if they have the token they need to pass on, offer to email it to someone but suggest other options
 end
 
 get '/play' do
@@ -59,10 +59,10 @@ get '/play' do
     flash[:error] = "You must log in or create an account."
     redirect '/login'
   end
+  @u = User.first :id => session[:u_id]
+  @token = params[:token]
 
-  #TODO: confirm minecraft username
-  #TODO: inform the person of the rules
-  #TODO: tell them to make sure to come back when they die
+  haml :play
 end
 
 post '/play' do
@@ -109,7 +109,7 @@ get '/account' do
     redirect '/login'
   end
 
-  @u = User.first( :id => session[:u_id] )
+  @u = User.first :id => session[:u_id]
 
   haml :account
 end

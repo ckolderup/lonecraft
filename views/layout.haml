@@ -7,12 +7,17 @@
     #header
       #logo
         Minebound
-      #nav
+      %ul#nav
         - if logged_in?
-          %a{:href => "/account"} Account
-          %a{:href => "/logout"} Logout
+          %li
+            %a{:href => "/play"} Got a token?
+          %li
+            %a{:href => "/account"} Account
+          %li
+            %a{:href => "/logout"} Logout
         - else
-          %a{:href => "/login"} Login
+          %li 
+            %a{:href => "/login"} Login
 
     #content
       =yield
