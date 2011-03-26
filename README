@@ -1,0 +1,15 @@
+Minebound is a web app that helps coordinate a special version of the Minecraft multiplayer server. Only one player is allowed in the game at a time, and the webapp portion communicates with the Minecraft server via Splash (http://www.github.com/ckolderup/Splash) and SSH to keep track of which Minecraft user is allowed in the server at any given time.
+
+Minebound is a work in progress.
+
+Things completed:
+  - basic user account management
+  - general site pages/navigation established
+
+Things to do:
+  - actual game logic (cashing in game tokens, communicating with the minecraft server)
+  - secure auth
+  - secure Splash communications (requires work on Splash as well)
+  - "confirm" step on user account signup
+  - admin control panel to manually kickstart games and manage the archive of past games for download
+  - a lot of style work :)
