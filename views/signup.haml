@@ -1,0 +1,20 @@
+- if flash[:notice]
+  #flash
+    = flash[:notice]
+
+#signup
+  %form{:action => "/signup", :method => "POST"}
+    .form-item
+      %label{:for => "email"} Email Address
+      %input{:id => "email", :name => "email", :type => "text"}
+    .form-item
+      %label{:for => "password"} Password
+      %input{:id => "password", :name => "password", :type => "password"}
+    .form-item
+      %label{:for => "password2"} Confirm Password
+      %input{:id => "password2", :name => "password2", :type => "password"}
+    .form-item
+      %label{:for => "mc_name"} Minecraft Username (you can do this later)
+      %input{:id => "mc_name", :name => "mc_name", :type => "text"}
+    .form-item
+      %input{:value => "Create Account", :type => "submit", :class => "button"}

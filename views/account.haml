@@ -1,0 +1,31 @@
+- if flash[:error]
+  #flash.error
+    = flash[:error]
+- elsif flash[:notice]
+  #flash.notice
+    = flash[:notice]
+
+#manage
+  %form{:action => "/account", :method => "POST"}
+    .form-item
+      %label{:for => "email"} Email Address
+      %input{:id => "email", :name => "email", :type => "text", :value => @u.email} 
+    .form-item
+      %label{:for => "password"} New password
+      %input{:id => "password", :name =>"password", :type => "password"}
+    .form-item
+      %label{:for => "password2"} Confirm new password
+      %input{:id => "password2", :name =>"password2", :type => "password"}
+    .form-item
+      %label{:for => "mc_name"} Minecraft Username (needed before you can use a game token)
+      %input{:id => "mc_name", :name => "mc_name", :type => "text", :value => @u.mc_name }
+    .form-item
+      %input{:value => "Update Account Details", :type => "submit", :class => "button"}
+
+#cash_token
+  %form{:action => "/play", :method => "GET"}
+    .form-item
+      %label{:for => "token"} Game Token
+      %input{:id => "token", :name => "token", :type => "text"}
+    .form-item
+      %input{:value => "Play in game", :type => "submit", :class => "button"}

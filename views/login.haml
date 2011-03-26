@@ -1,0 +1,17 @@
+- if flash[:error]
+  #flash.error
+    = flash[:error]
+- elsif flash[:notice]
+  #flash.notice
+    = flash[:notice]
+
+#login
+  %form{:action => "/login", :method => "POST"}
+    .form-item
+      %label{:for => "email"} Email Address
+      %input{:id => "email", :name => "email", :type => "text"}
+    .form-item
+      %label{:for => "password"} Password
+      %input{:id => "password", :name => "password", :type => "password"}
+    .form-item
+      %input{:value => "Log in", :type => "submit", :class => "button" }
