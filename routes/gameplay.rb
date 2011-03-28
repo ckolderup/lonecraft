@@ -38,15 +38,17 @@ class Minebound < Sinatra::Application
     redirect '/play', 303
   end
 
-  get '/play' do
-    unless logged_in?
-      flash[:error] = "You must log in or create an account."
-      redirect '/login'
-    end
-    @u = User.first :id => session[:u_id]
-    @token = params[:token]
+  ['/play', '/play/:token'].each do |path|  
+    get path do
+      unless logged_in?
+        flash[:error] = "You must log in or create an account."
+        redirect '/login'
+      end
+      @u = User.first :id => session[:u_id]
+      @token = params[:token]
 
-    haml :play
+      haml :play
+    end
   end
 
   post '/play' do
@@ -55,10 +57,9 @@ class Minebound < Sinatra::Application
       redirect '/login', 303
     end
 
+    #TODO: cash in the token (params[:token])
     #TODO: POST /play: connect to ec2
-    #TODO: POST /play: add username to whitelist.txt on ec2
-    #TODO: POST /play: update model
-    #TODO: POST /play: redirect somewhere?
+    #TODO: POST /play: add username to whitelist.txt
   end
 
 end
