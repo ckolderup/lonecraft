@@ -32,7 +32,7 @@ class Minebound < Sinatra::Application
 
     @token = Game.current.token
 
-    #TODO: send an email with the contents of the key
+    #TODO: POST /pass: send an email with the contents of the key
 
     flash[:notice] = "Key sent to #{@email}."
     redirect '/play', 303
@@ -55,8 +55,10 @@ class Minebound < Sinatra::Application
       redirect '/login', 303
     end
 
-    #TODO: cash in the token (params[:token])
-    #TODO: go to MC server, add username to whitelist.txt
+    #TODO: POST /play: connect to ec2
+    #TODO: POST /play: add username to whitelist.txt on ec2
+    #TODO: POST /play: update model
+    #TODO: POST /play: redirect somewhere?
   end
 
 end

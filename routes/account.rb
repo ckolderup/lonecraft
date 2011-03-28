@@ -15,8 +15,7 @@ class Minebound < Sinatra::Application
     haml :login
   end
 
-  post '/login' do
-    #TODO: make this HTTPS
+  post '/login' do #TODO: make this HTTPS
     if user = User.authenticate(params[:email], params[:password])
       session[:u_id] = user.id
       redirect '/account', 303
@@ -37,8 +36,7 @@ class Minebound < Sinatra::Application
     haml :account
   end
 
-  post '/account' do
-    #TODO: make this HTTPS
+  post '/account' do #TODO: make this HTTPS
     unless logged_in?
       flash[:error] = "You must be logged in"
       redirect '/login', 303
@@ -67,8 +65,7 @@ class Minebound < Sinatra::Application
     haml :signup
   end
 
-  post '/signup' do
-    #TODO: make this HTTPS
+  post '/signup' do #TODO: make this HTTPS
     unless params[:password].eql? params[:password2]
       flash[:error] = "Passwords did not match. Try again."
       redirect '/signup', 303
@@ -91,26 +88,10 @@ class Minebound < Sinatra::Application
     redirect '/account', 303
   end
 
-  get '/confirm/:token' do
-    #TODO: offer to confirm the account 
+  get '/confirm/:token' do #TODO: offer to confirm the account 
   end
 
-  post '/confirm' do
-    #TODO: actually confirm the account
-  end
-
-  ##### BLOGGING #####
-
-  get '/write' do
-    #TODO: a list of all the rounds you've been in 
-  end
-
-  get '/write/:round' do
-    #TODO: a textarea with the contents of your round story
-  end
-
-  post '/write/:round' do
-    #TODO: receive the most recent text and update it in the db
+  post '/confirm' do #TODO: actually confirm the account
   end
 
 end

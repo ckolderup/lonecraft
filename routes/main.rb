@@ -1,5 +1,5 @@
 class Minebound < Sinatra::Application
-
+  
   get '/' do
     haml :index
   end
