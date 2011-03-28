@@ -1,0 +1,42 @@
+$nav_height: 50px
+
+body
+  background-color: #145414
+
+#header
+  font-family: sans-serif
+  color: #fff
+  a
+    color: #fff
+  height: $nav_height
+  margin-top: 15px
+  #logo
+    float: left
+    left: 10px
+    position: relative
+  #nav
+    float: right
+    display: inline
+    right: 10px
+    position: relative
+    margin: 0
+    li
+      list-style: none
+      display: inline
+    li:before
+      content: " - "
+    li#first:before
+      content: " "
+
+#content
+  top: $nav_height
+  margin-top: 25px
+  width: 800px
+  background-color: #fff
+  color: #000
+  left: 50px
+  padding: 20px
+  position: absolute
+
+  div
+    padding-bottom: 20px

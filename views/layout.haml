@@ -9,14 +9,14 @@
         %a{:href => "/"} Minebound
       %ul#nav
         - if logged_in?
-          %li
+          %li#first
             %a{:href => "/play"} Got a token?
           %li
             %a{:href => "/account"} Account
           %li
             %a{:href => "/logout"} Logout
         - else
-          %li 
+          %li#first 
             %a{:href => "/login"} Login
 
     #content
