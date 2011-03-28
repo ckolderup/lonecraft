@@ -1,0 +1,17 @@
+
+#wut Flavor text about how the token works, how you might want to pass it on in a creative way, etc. 
+
+- if @passable
+  #who_me This page will show this token until that token is cashed in, so if you give it to a friend and they are being lazy, feel free to come back here and get it to give to someone else. Might also point out that it won't work for this same Minecraft account. They can play again during the next game, if they get the new token.
+
+  #big_token #{@token}
+
+  #email_it
+    %form{:action => "/pass", :method => "POST"}
+      .form-item
+        %label{:for => "email"} Email Address you want this token sent to
+        %input{:id => "email", :name => "email", :type => "text"}
+      .form-item
+        %input{:value => "Send email", :type => "submit", :class => "button"}
+- else
+  #nope You don't have access to a token right now. Come back later after you've played a round and died.

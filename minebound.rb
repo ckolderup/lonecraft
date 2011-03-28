@@ -20,7 +20,7 @@ class User
   property :mc_name, Text
   property :admin,  Boolean, :default => false
  
-  belongs_to :game, :required => false
+  belongs_to :round, :required => false
 
   def password=(pass)
     @password = pass
@@ -35,15 +35,47 @@ class User
 
 end
 
+class Round
+  include DataMapper::Resource
+  property :id, Serial
+  property :started, DateTime
+  property :finished, DateTime
+  property :story, Text
+  belongs_to :game
+  has 1, :user
+end 
+
 class Game
  include DataMapper::Resource
  property :id, Serial
- property :started, DateTime
- property :finished, DateTime
  property :worldfile_url, URI
- property :curr_token, UUID
- has 1, :curr_user, 'User'
- has n, :already_played, 'User'
+ property :token, UUID
+ has n, :rounds
+
+ def first_round
+   rounds.first( :order => [:started.asc])
+ end
+
+ def last_round
+   rounds.last( :order => [:started.asc])
+ end
+
+ def player
+   last_round.user
+ end
+
+ def active?
+   last_round.finished
+ end
+
+ def finished?
+   round.size == 10 && last_round.finished
+ end
+
+ def self.current
+   last( :rounds => { :order => [:started.asc]})
+ end
+
 end
 
 DataMapper.auto_upgrade!
@@ -51,7 +83,41 @@ DataMapper.auto_upgrade!
 ##### GAMEPLAY #####
 
 get '/pass' do
-  #TODO: see if they have the token they need to pass on, offer to email it to someone but suggest other options
+  unless logged_in?
+    flash[:error] = "You must log in or create an account."
+    redirect '/login'
+  end
+
+  @u = User.first :id => session[:u_id]
+ 
+  @passable = false
+  @token = nil
+
+  unless Game.current.nil?
+    @passable = (Game.current.player == @u)
+    @token = Game.current.token
+  end
+
+  haml :pass
+end
+
+post '/pass' do
+  unless logged_in?
+    flash[:error] = "You must log in or create an account."
+    redirect '/login', 303
+  end
+
+  @u = User.first :id => session[:u_id]
+  @email = params[:email]
+  
+  error 403 unless (Game.current && Game.current.player == @u)
+
+  @token = Game.current.token
+
+  #TODO: send an email with the contents of the key
+
+  flash[:notice] = "Key sent to #{@email}."
+  redirect '/play', 303
 end
 
 get '/play' do
@@ -174,6 +240,20 @@ end
 
 post '/confirm' do
   #TODO: actually confirm the account
+end
+
+##### BLOGGING #####
+
+get '/write' do
+  #TODO: a list of all the rounds you've been in 
+end
+
+get '/write/:round' do
+  #TODO: a textarea with the contents of your round story
+end
+
+post '/write/:round' do
+  #TODO: receive the most recent text and update it in the db
 end
 
 ##### MISCELLANEOUS FUNCTIONALITY #####
