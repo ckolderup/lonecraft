@@ -21,7 +21,7 @@ class Minebound < Sinatra::Application
     @u = User.first :id => session[:u_id]
     @email = params[:email]
     
-    error 403 unless (Game.current && Game.current.player == @u)
+    error 403 unless (Game.current && Game.current.player == @u) #TODO: change this to something informative
 
     @token = Game.current.token
 
@@ -56,7 +56,7 @@ class Minebound < Sinatra::Application
     @u = User.first :id => session[:u_id]
 
     error 500 unless Game.current
-    error 403 unless params[:token] == Game.current.token #TODO: change this to something descriptive
+    error 403 unless params[:token] == Game.current.token #TODO: change this to something informative
     
     Game.current.token = nil
     @newround = Round.create(:started => Time.now, :user => @u)
