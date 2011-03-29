@@ -2,7 +2,7 @@ class Game
  include DataMapper::Resource
  property :id, Serial
  property :worldfile_url, URI
- property :token, UUID
+ property :token, UUID #make token crockford's base32
  has n, :rounds
 
  def first_round
