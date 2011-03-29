@@ -7,14 +7,7 @@ class Minebound < Sinatra::Application
     end
 
     @u = User.first :id => session[:u_id]
-   
-    @passable = false
-    @token = nil
-
-    unless Game.current.nil?
-      @passable = (Game.current.player == @u)
-      @token = Game.current.token
-    end
+    @passable = (Game.current && Game.current.player == @u)
 
     haml :pass
   end
@@ -32,7 +25,11 @@ class Minebound < Sinatra::Application
 
     @token = Game.current.token
 
-    #TODO: POST /pass: send an email with the contents of the key
+    #TODO: get a gmail account, set up gmail auth using an ENV for passwd
+    Pony.mail :to => @email,
+              :from => 'no-reply@kolderup.org', 
+              :subject => 'Minebound game token',
+              :body => erb(:token_email)
 
     flash[:notice] = "Key sent to #{@email}."
     redirect '/play', 303
@@ -56,8 +53,16 @@ class Minebound < Sinatra::Application
       flash[:error] = "You must log in or create an account."
       redirect '/login', 303
     end
+    @u = User.first :id => session[:u_id]
 
-    #TODO: cash in the token (params[:token])
+    error 500 unless Game.current
+    error 403 unless params[:token] == Game.current.token #TODO: change this to something descriptive
+    
+    Game.current.token = nil
+    @newround = Round.create(:started => Time.now, :user => @u)
+    Game.current.rounds << @newround
+    Game.current.save
+
     #TODO: POST /play: connect to ec2
     #TODO: POST /play: add username to whitelist.txt
   end
