@@ -1,16 +1,26 @@
 #rules The rules will be explained here.
 
-#warn PLEASE BE SURE YOU HAVE THE CORRECT MINECRAFT USERNAME FILLED IN BELOW.
+- unless @current
+  #warn PLEASE BE SURE YOU HAVE THE CORRECT MINECRAFT USERNAME FILLED IN BELOW.
 
-#use_token
-  %form{:action => "/play", :method => "POST"}
-    .form-item
-      %label{:for => "token"} Game Token
-      %input{:id => "token", :name => "token", :type => "text", :value => @token}
-    .form-item
-      %label{:for => "mc_user"} Confirm Minecraft username
-      %input{:id => "mc_user", :name => "mc_user", :type => "text", :value => @u.mc_name}
-    .form-item
-      %input{:value => "Play in game", :type => "submit", :class => "button"}
+  #use_token
+    %form{:action => "/play", :method => "POST"}
+      .form-item
+        %label{:for => "token"} Game Token
+        %input{:id => "token", :name => "token", :type => "text", :value => @token}
+      .form-item
+        %label{:for => "mc_user"} Confirm Minecraft username
+        %input{:id => "mc_user", :name => "mc_user", :type => "text", :value => @u.mc_name}
+      .form-item
+        %input{:value => "Play in game", :type => "submit", :class => "button"}
+- else
+  
+  #directions 
+    Since you are the active user, your Minecraft account 
+    %span.crucial #{@u.mc_name} 
+    has been granted access to the Minecraft Survival Multiplayer server at 
+    -#TODO: how to use the > for the period after the span?
+    %span.crucial #{@mc_server} 
+    \. You will be allowed to play until you die.
 
 #comeback Make sure to come back when you die, y'hear?

@@ -18,7 +18,7 @@ class Minebound < Sinatra::Application
   post '/login' do #TODO: make this HTTPS
     if user = User.authenticate(params[:email], params[:password])
       session[:u_id] = user.id
-      redirect '/account', 303
+      redirect flash[:vaudeville_hook]||'/account', 303
     else
       flash[:error] = "Incorrect username or password."
       redirect '/login', 303
@@ -28,6 +28,7 @@ class Minebound < Sinatra::Application
   get '/account' do
     unless logged_in?
       flash[:error] = "You must be logged in"
+      flash[:vaudeville_hook] = '/account'
       redirect '/login'
     end
 
@@ -39,6 +40,7 @@ class Minebound < Sinatra::Application
   post '/account' do #TODO: make this HTTPS
     unless logged_in?
       flash[:error] = "You must be logged in"
+      flash[:vaudeville_hook] = '/account'
       redirect '/login', 303
     end
 

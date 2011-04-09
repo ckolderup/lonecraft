@@ -3,6 +3,7 @@ class Minebound < Sinatra::Application
   get '/pass' do
     unless logged_in?
       flash[:error] = "You must log in or create an account."
+      flash[:vaudeville_hook] = '/pass'
       redirect '/login'
     end
 
@@ -15,6 +16,7 @@ class Minebound < Sinatra::Application
   post '/pass' do
     unless logged_in?
       flash[:error] = "You must log in or create an account."
+      flash[:vaudeville_hook] = '/pass'
       redirect '/login', 303
     end
 
@@ -25,24 +27,42 @@ class Minebound < Sinatra::Application
 
     @token = Game.current.token
 
-    #TODO: get a gmail account, set up gmail auth using an ENV for passwd
     Pony.mail :to => @email,
               :from => 'no-reply@kolderup.org', 
               :subject => 'Minebound game token',
-              :body => erb(:token_email)
+              :body => erb(:token_email),
+              :via => :smtp,
+              :via_options => {
+                :address => 'smtp.gmail.com',
+                :port => 587,
+                :enable_starttls_auto => true,
+                :user_name => ENV['EMAIL_USER'],
+                :password => ENV['EMAIL_PASS'],
+                :authentication => :plain,
+                :domain => ENV['EMAIL_DOMAIN']
+              }
 
     flash[:notice] = "Key sent to #{@email}."
-    redirect '/play', 303
+    redirect '/pass', 303
   end
 
   ['/play', '/play/:token'].each do |path|  
     get path do
       unless logged_in?
         flash[:error] = "You must log in or create an account."
+        flash[:vaudeville_hook] = '/play'
+        flash[:vaudeville_hook] << "/#{params[:token]}" if params[:token]
         redirect '/login'
       end
+
       @u = User.first :id => session[:u_id]
-      @token = params[:token]
+      @current = (Game.current && Game.current.player == @u)
+      
+      if @current
+        @mc_server = ENV['GAME_DOMAIN']
+      else
+        @token = params[:token]
+      end
 
       haml :play
     end
@@ -51,6 +71,7 @@ class Minebound < Sinatra::Application
   post '/play' do
     unless logged_in?
       flash[:error] = "You must log in or create an account."
+      flash[:vaudeville_hook] = "/play/#{params[:token]}"
       redirect '/login', 303
     end
     @u = User.first :id => session[:u_id]
@@ -63,8 +84,10 @@ class Minebound < Sinatra::Application
     Game.current.rounds << @newround
     Game.current.save
 
-    #TODO: POST /play: connect to ec2
-    #TODO: POST /play: add username to whitelist.txt
+    ec2_ssh("echo \"#{@u.mc_name}\" > bukkit/white-list.txt")
+
+    flash[:notice] = "Success! You are now the active player. Please see the instructions below." 
+    redirect '/play', 303
   end
 
 end
