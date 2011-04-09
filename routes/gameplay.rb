@@ -29,7 +29,7 @@ class Minebound < Sinatra::Application
 
     Pony.mail :to => @email,
               :from => 'no-reply@kolderup.org', 
-              :subject => 'Minebound game token',
+              :subject => 'Lonecraft game token',
               :body => erb(:token_email),
               :via => :smtp,
               :via_options => {
