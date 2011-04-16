@@ -1,4 +1,4 @@
-class Minebound < Sinatra::Application
+class Lonecraft < Sinatra::Application
   get '/api/ec2/test' do #TODO: delete this
   end
 

@@ -1,4 +1,4 @@
-class Minebound < Sinatra::Application
+class Lonecraft < Sinatra::Application
 
   get '/relate' do #TODO: a list of all the rounds you've been in 
   end

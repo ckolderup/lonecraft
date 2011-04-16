@@ -1,4 +1,4 @@
-class Minebound < Sinatra::Application
+class Lonecraft < Sinatra::Application
 
   get '/pass' do
     unless logged_in?

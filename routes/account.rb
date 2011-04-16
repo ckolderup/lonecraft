@@ -1,4 +1,4 @@
-class Minebound < Sinatra::Application
+class Lonecraft < Sinatra::Application
 
   def logged_in?
     session[:u_id] != nil
