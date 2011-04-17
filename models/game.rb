@@ -7,7 +7,7 @@ class Game
  has n, :rounds
 
  def token
-   token.to_s
+   self.token.to_s
  end
 
  def challenge(intoken)
