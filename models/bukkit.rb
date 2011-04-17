@@ -4,7 +4,7 @@ class Bukkit
     @commands = ""
     @commands << "rm bukkit/white-list.txt; "
     @commands << "echo \"#{ENV['ADMIN_MCNAME']}\" > bukkit/white-list.txt; "
-    @commands << "echo \"#{@u.mc_name}\" >> bukkit/banned-players.txt; "
+    @commands << "echo \"#{mc_name}\" >> bukkit/banned-players.txt; "
 
     ec2_ssh(@commands)
   end
