@@ -2,8 +2,13 @@ class Game
  include DataMapper::Resource
  property :id, Serial
  property :worldfile_url, URI
- property :token, UUID #make token crockford's base32
+ property :token, UUID, :default => lambda { UUIDTools::UUID.random_create }
+ property :created, DateTime, :default => lambda { DateTime.now }
  has n, :rounds
+
+ def challenge(intoken)
+   token == intoken
+ end
 
  def first_round
    rounds.first( :order => [:started.asc])
@@ -25,8 +30,25 @@ class Game
    round.size == 10 && last_round.finished
  end
 
+ def cycle
+    @round = last_round
+    @round.finished = Time.now
+    @round.save
+    
+    @u = @round.user
+    Bukkit.ban_user(@u.mc_name)      
+
+    token = UUIDTools::UUID.random_create
+
+    finish if (rounds.size == 10) 
+ end
+
+ def finish
+      #TODO: send email to all players in round announcing the end of the round and asking any who haven't already to write their post
+ end
+
  def self.current
-   last( :rounds => { :order => [:started.asc]})
+   first( :order => [:created.desc]})
  end
 
 end

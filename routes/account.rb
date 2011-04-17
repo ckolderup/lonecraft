@@ -1,7 +1,11 @@
-class Minebound < Sinatra::Application
-
+class Lonecraft < Sinatra::Application
+  
   def logged_in?
     session[:u_id] != nil
+  end
+
+  def current_user
+    return User.first :id => session[:u_id]
   end
 
 
@@ -18,7 +22,7 @@ class Minebound < Sinatra::Application
   post '/login' do #TODO: make this HTTPS
     if user = User.authenticate(params[:email], params[:password])
       session[:u_id] = user.id
-      redirect '/account', 303
+      redirect flash[:vaudeville_hook]||'/account', 303
     else
       flash[:error] = "Incorrect username or password."
       redirect '/login', 303
@@ -28,21 +32,24 @@ class Minebound < Sinatra::Application
   get '/account' do
     unless logged_in?
       flash[:error] = "You must be logged in"
+      flash[:vaudeville_hook] = '/account'
       redirect '/login'
     end
 
-    @u = User.first :id => session[:u_id]
+    @u = current_user
 
     haml :account
   end
 
   post '/account' do #TODO: make this HTTPS
-    unless logged_in?
+    unless User.logged_in?
       flash[:error] = "You must be logged in"
+      flash[:vaudeville_hook] = '/account'
       redirect '/login', 303
     end
 
-    @u = User.first( :id => session[:u_id] )
+    @u = current_user 
+
     @u.mc_name = params[:mc_name] unless params[:mc_name].nil?
     @u.email = params[:email] unless params[:email].nil?
     

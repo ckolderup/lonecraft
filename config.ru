@@ -3,5 +3,5 @@ require 'bundler/setup'
 
 Bundler.require
 
-require './minebound.rb'
-run Minebound
+require './lonecraft.rb'
+run Lonecraft

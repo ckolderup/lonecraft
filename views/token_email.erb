@@ -1,12 +1,12 @@
 Hey dude,
 
-Someone sent you a Minebound token. Here it is:
+Someone sent you a Lonecraft token. Here it is:
 
 <%= @token %>
 
 If you're ready to play right now, you can cash it in directly from this page:
 
-http://minebound.url/play/<%= @token %>
+http://<%= ENV['site_domain'] =>/play/<%= @token %>
 
 You'll need to log in or create an account if you haven't already.
 

@@ -1,4 +1,4 @@
-class Minebound < Sinatra::Application
+class Lonecraft < Sinatra::Application
   
   get '/' do #TODO: add list of recently completed games (and status of current game?)
     haml :index
@@ -14,7 +14,7 @@ class Minebound < Sinatra::Application
   get '/game/:id' do #TODO: display list of blog posts for a game and world file download link 
   end
 
-  get '/minebound.css' do
+  get '/lonecraft.css' do
     headers 'Content-Type' => 'text/css; charset=utf-8'
     sass :style
   end
