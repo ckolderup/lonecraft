@@ -3,6 +3,7 @@ class Game
  property :id, Serial
  property :worldfile_url, URI
  property :token, UUID, :default => lambda { UUIDTools::UUID.random_create }
+ property :created, DateTime, :default => lambda { DateTime.now }
  has n, :rounds
 
  def challenge(intoken)
@@ -47,7 +48,7 @@ class Game
  end
 
  def self.current
-   last( :rounds => { :order => [:started.asc]})
+   first( :order => [:created.desc]})
  end
 
 end
