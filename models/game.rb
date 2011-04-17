@@ -23,7 +23,7 @@ class Game
  end
 
  def active?
-   last_round.finished
+   return last_round.finished == nil
  end
 
  def finished?
