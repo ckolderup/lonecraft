@@ -67,11 +67,14 @@ class Lonecraft < Sinatra::Application
       flash[:vaudeville_hook] = "/play/#{params[:token]}"
       redirect '/login', 303
     end
-    @u = current_user 
-
+      
     error 500 unless Game.current
     error 403 unless Game.current.challenge(params[:token]) #TODO: change this to something informative
     #TODO: verify that the person has not played during this Game
+    
+    @u = current_user 
+    @u.mc_name = params[:mc_user] if (params[:mc_user] && params[:mc_user].size > 0)
+    @u.save
    
     @game = Game.current 
     @game.token = nil
