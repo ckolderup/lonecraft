@@ -11,7 +11,7 @@ class Game
  end
 
  def challenge(intoken)
-   token.to_s == intoken
+   tokenobj.to_s == intoken
  end
 
  def first_round
