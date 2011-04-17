@@ -6,8 +6,12 @@ class Game
  property :created, DateTime, :default => lambda { DateTime.now }
  has n, :rounds
 
+ def token
+   token.to_s
+ end
+
  def challenge(intoken)
-   token == intoken
+   token.to_s == intoken
  end
 
  def first_round
