@@ -33,7 +33,6 @@ class Game
  def cycle
     @round = last_round
     @round.finished = Time.now
-    @round.save
     
     @u = @round.user
     Bukkit.ban_user(@u.mc_name)      
