@@ -47,11 +47,11 @@ class Game
   end
 
   def assign(user)
-    @game.token = nil
+    token = nil
   
     @newround = Round.create(:started => Time.now, :user => user)
-    @game.rounds << @newround
-    @game.save
+    rounds << @newround
+    self.save
  
     Bukkit.white_list(user.mc_name)
   end
