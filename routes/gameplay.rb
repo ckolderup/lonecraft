@@ -44,7 +44,10 @@ class Lonecraft < Sinatra::Application
 
       @u = current_user 
 
-      @current = (Game.current && Game.current.player == @u)
+      @current = false
+      
+      @current = (Game.current && Game.current.last_round &&
+                  Game.current.last_round.player == @u)
       
       if @current
         @mc_server = ENV['GAME_DOMAIN']
