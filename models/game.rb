@@ -31,9 +31,10 @@ class Game
   end
 
   def cycle
+    update(:token => UUIDTools::UUID.random_create.to_s)
+    
     @round = last_round
     @round.finished = Time.now
-    update(:token => UUIDTools::UUID.random_create.to_s)
     
     self.save
     
@@ -44,6 +45,7 @@ class Game
 
   def assign(user)
     update(:token => nil)
+   
     @newround = Round.create(:started => Time.now, :user => user)
     rounds << @newround
    
