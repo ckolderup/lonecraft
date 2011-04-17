@@ -1,7 +1,11 @@
 class Lonecraft < Sinatra::Application
-
+  
   def logged_in?
     session[:u_id] != nil
+  end
+
+  def current_user
+    return User.first :id => session[:u_id]
   end
 
 
@@ -32,19 +36,20 @@ class Lonecraft < Sinatra::Application
       redirect '/login'
     end
 
-    @u = User.first :id => session[:u_id]
+    @u = current_user
 
     haml :account
   end
 
   post '/account' do #TODO: make this HTTPS
-    unless logged_in?
+    unless User.logged_in?
       flash[:error] = "You must be logged in"
       flash[:vaudeville_hook] = '/account'
       redirect '/login', 303
     end
 
-    @u = User.first( :id => session[:u_id] )
+    @u = current_user 
+
     @u.mc_name = params[:mc_name] unless params[:mc_name].nil?
     @u.email = params[:email] unless params[:email].nil?
     

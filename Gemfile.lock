@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/levinalex/base32.git
+  revision: 97860d258104504a92721ac476cf39e2f81adf7c
+  specs:
+    base32 (0.0.2)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -83,6 +89,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  base32!
   data_mapper
   dm-postgres-adapter
   dm-sqlite-adapter

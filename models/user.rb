@@ -7,6 +7,10 @@ class User
   property :admin,  Boolean, :default => false
  
   belongs_to :round, :required => false
+  
+  def admin?
+    return admin
+  end
 
   def password=(pass)
     @password = pass

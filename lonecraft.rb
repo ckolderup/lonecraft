@@ -9,8 +9,23 @@ require 'pony'
 use Rack::Session::Cookie #TODO: make cookie last more than just the session
 use Rack::Flash
 
-def ec2_ssh (commands) #TODO: make this more ruby-like (array of commands instead of string, handle the "; " between each element)
-  system("ssh -i #{ENV['EC2_KEYFILE']} ec2-user@#{ENV['GAME_DOMAIN']} \"#{commands}\"") 
+def send_email(options)
+  return false unless options[:to] && options[:subject] && options[:body]
+  Pony.mail :to => options[:to],
+            :from => "no-reply@#{ENV['EMAIL_DOMAIN']}", 
+            :subject => options[:subject],
+            :body => options[:body],
+            :via => :smtp,
+            :via_options => {
+              :address => 'smtp.gmail.com',
+              :port => 587,
+              :enable_starttls_auto => true,
+              :user_name => ENV['EMAIL_USER'],
+              :password => ENV['EMAIL_PASS'],
+              :authentication => :plain,
+              :domain => ENV['EMAIL_DOMAIN']
+            }
+  return true
 end
 
 require_relative 'models/init'
