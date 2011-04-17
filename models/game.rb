@@ -1,18 +1,12 @@
-require 'base32/crockford'
-
 class Game
  include DataMapper::Resource
  property :id, Serial
  property :worldfile_url, URI
- property :token, UUID #TODO: make token crockford's base32
+ property :token, UUID, :default => lambda { UUIDTools::UUID.random_create }
  has n, :rounds
 
- def token
-   Base32::Crockford.encode(token) 
- end
-
- def challenge(crockford)
-   Base32::Crockford.decode(crockford) == token
+ def challenge(intoken)
+   token == intoken
  end
 
  def first_round
@@ -43,7 +37,9 @@ class Game
     @u = @round.user
     Bukkit.ban_user(@u.mc_name)      
 
-    finish if (Game.current.rounds.size == 10) 
+    token = UUIDTools::UUID.random_create
+
+    finish if (rounds.size == 10) 
  end
 
  def finish
