@@ -92,3 +92,4 @@ DEPENDENCIES
   rack
   rack-flash
   sinatra
+  uuidtools
