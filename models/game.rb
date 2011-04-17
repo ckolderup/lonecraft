@@ -2,16 +2,12 @@ class Game
  include DataMapper::Resource
  property :id, Serial
  property :worldfile_url, URI
- property :tokenobj, UUID, :default => lambda { UUIDTools::UUID.random_create }
+ property :token, String, :default => lambda { UUIDTools::UUID.random_create.to_s }
  property :created, DateTime, :default => lambda { DateTime.now }
  has n, :rounds
 
- def token
-   tokenobj.to_s
- end
-
  def challenge(intoken)
-   tokenobj.to_s == intoken
+   token == intoken
  end
 
  def first_round
