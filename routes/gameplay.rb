@@ -8,7 +8,7 @@ class Lonecraft < Sinatra::Application
     end
 
     @u = current_user
-    @passable = (Game.current && Game.current.player == @u)
+    @passable = (Game.current && Game.active? Game.current.player == @u)
     @token = Game.current.token
 
     haml :pass
@@ -76,13 +76,7 @@ class Lonecraft < Sinatra::Application
     @u.mc_name = params[:mc_user] if (params[:mc_user] && params[:mc_user].size > 0)
     @u.save
    
-    @game = Game.current 
-    @game.token = nil
-    @newround = Round.create(:started => Time.now, :user => @u)
-    @game.rounds << @newround
-    @game.save
-
-    Bukkit.white_list(@u.mc_name)
+    Game.current.assign(@u)
 
     flash[:notice] = "Success! You are now the active player. Please see the instructions below." 
     redirect '/play', 303
