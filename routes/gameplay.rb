@@ -47,7 +47,7 @@ class Lonecraft < Sinatra::Application
       @current = false
       
       @current = (Game.current && Game.current.last_round &&
-                  Game.current.last_round.player == @u)
+                  Game.current.last_round.user == @u)
       
       if @current
         @mc_server = ENV['GAME_DOMAIN']
@@ -70,11 +70,12 @@ class Lonecraft < Sinatra::Application
     error 500 unless Game.current
     error 403 unless Game.current.challenge(params[:token]) #TODO: change this to something informative
     #TODO: verify that the person has not played during this Game
-    
-    Game.current.token = nil
+   
+    @game = Game.current 
+    @game.token = nil
     @newround = Round.create(:started => Time.now, :user => @u)
-    Game.current.rounds << @newround
-    Game.current.save
+    @game.rounds << @newround
+    @game.save
 
     Bukkit.white_list(@u.mc_name)
 
