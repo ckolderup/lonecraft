@@ -9,6 +9,7 @@ class Lonecraft < Sinatra::Application
 
     @u = current_user
     @passable = (Game.current && Game.current.player == @u)
+    @token = Game.current.token
 
     haml :pass
   end
@@ -47,6 +48,7 @@ class Lonecraft < Sinatra::Application
       @current = false
       
       @current = (Game.current && Game.current.last_round &&
+                  Game.current.active? && 
                   Game.current.last_round.user == @u)
       
       if @current
