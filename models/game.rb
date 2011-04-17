@@ -27,7 +27,7 @@ class Game
  end
 
  def finished?
-   round.size == 10 && last_round.finished
+   rounds.size == 10 && last_round.finished
  end
 
  def cycle
@@ -40,11 +40,11 @@ class Game
 
     token = UUIDTools::UUID.random_create.to_s
 
-    finish if (rounds.size == 10) 
+    wrapup if finished?
     self.save
  end
 
- def finish
+ def wrapup
       #TODO: send email to all players in round announcing the end of the round and asking any who haven't already to write their post
  end
 
