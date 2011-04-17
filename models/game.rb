@@ -33,24 +33,20 @@ class Game
   def cycle
     @round = last_round
     @round.finished = Time.now
-
-    @u = @round.user
-    Bukkit.ban_user(@u.mc_name)      
-
     token = UUIDTools::UUID.random_create.to_s
-
-    wrapup if finished?
-
-    puts "Saving..." 
+    
     self.save
-    put "Saved!"
+    
+    Bukkit.ban_user(@round.user.mc_name)      
+    
+    wrapup if finished?
   end
 
   def assign(user)
     token = nil
-  
     @newround = Round.create(:started => Time.now, :user => user)
     rounds << @newround
+   
     self.save
  
     Bukkit.white_list(user.mc_name)
