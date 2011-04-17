@@ -38,9 +38,10 @@ class Game
     @u = @round.user
     Bukkit.ban_user(@u.mc_name)      
 
-    token = UUIDTools::UUID.random_create
+    token = UUIDTools::UUID.random_create.to_s
 
     finish if (rounds.size == 10) 
+    self.save
  end
 
  def finish
