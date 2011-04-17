@@ -48,7 +48,7 @@ class Game
  end
 
  def self.current
-   first( :order => [:created.desc]})
+   first( :order => [:created.desc])
  end
 
 end
