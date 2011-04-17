@@ -8,7 +8,7 @@ class Lonecraft < Sinatra::Application
     end
 
     @u = current_user
-    @passable = (Game.current && Game.current.active? && Game.current.player == @u)
+    @passable = (Game.current && not Game.current.active? && Game.current.player == @u)
     @token = Game.current.token
 
     haml :pass
