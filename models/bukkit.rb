@@ -3,6 +3,7 @@ class Bukkit
   def self.ban_user(mc_name)
     @commands = ""
     @commands << "rm bukkit/white-list.txt; "
+    @commands << "echo \"#{ENV['ADMIN_MCNAME']}\" > bukkit/white-list.txt; "
     @commands << "echo \"#{@u.mc_name}\" >> bukkit/banned-players.txt; "
 
     ec2_ssh(@commands)
@@ -11,6 +12,7 @@ class Bukkit
   def self.reset_server
     @commands = ""
     @commands << "rm bukkit/white-list.txt; "
+    @commands << "echo \"#{ENV['ADMIN_MCNAME']}\" > bukkit/white-list.txt; "
     @commands << "rm bukkit/banned-players.txt; "
     @commands << "rm bukkit/plugins/GhostBuster/ghosts.yml; "
 
@@ -19,7 +21,7 @@ class Bukkit
 
   def self.white_list(mc_name)
     @commands = ""
-    @commands << "echo \"#{mc_name}\" > bukkit/white-list.txt"
+    @commands << "echo \"#{mc_name}\" >> bukkit/white-list.txt"
 
     ec2_ssh(@commands)
   end
