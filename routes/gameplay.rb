@@ -28,7 +28,7 @@ class Lonecraft < Sinatra::Application
 
     @token = Game.current.token
 
-    send_email(@email, "Lonecraft game token", erb(:token_email))
+    send_email( :to => @email, :subject => "Lonecraft game token", :body => erb(:token_email))
 
     flash[:notice] = "Key sent to #{@email}."
     redirect '/pass', 303
