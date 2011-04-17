@@ -15,6 +15,7 @@ class Lonecraft < Sinatra::Application
   post '/admin/game/:id/cycle' do
     error 403 unless User.logged_in && User.current.admin?
     Game.current.cycle
+    @token = Game.current.token
     send_email(User.current.email, "Lonecraft game token", erb(:token_email))
   end
   
@@ -23,7 +24,7 @@ class Lonecraft < Sinatra::Application
 
     @oldgame = Game.current
     @newgame = Game.create
-
+    @token = Game.current.token
     send_email(User.current.email, "Lonecraft game token", erb(:token_email))
   end
 end
