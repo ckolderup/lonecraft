@@ -1,0 +1,1 @@
+these shell scripts live on the ec2 server and are used to manage the bukkit server. They're called via SSH in models/bukkit.rb's Bukkit.reset_server method.
