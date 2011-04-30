@@ -9,9 +9,10 @@ class Lonecraft < Sinatra::Application
 
     @game = Game.current
     @game.cycle
+    @game.save
       
     if not @game.finished?
-      send_email(@email, "You have died...", erb(:died_email)) 
+      send_email( :to => @game.player.email, :subject => "You have died...", :body => erb(:died_email)) 
     end
   end
 

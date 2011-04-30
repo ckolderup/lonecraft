@@ -8,7 +8,8 @@ class Lonecraft < Sinatra::Application
     end
 
     @u = current_user
-    @passable = (Game.current && Game.current.player == @u)
+    @passable = (Game.current && !(Game.current.active?) && Game.current.player == @u)
+    @token = Game.current.token
 
     haml :pass
   end
@@ -27,7 +28,7 @@ class Lonecraft < Sinatra::Application
 
     @token = Game.current.token
 
-    send_email(@email, "Lonecraft game token", erb(:token_email))
+    send_email( :to => @email, :subject => "Lonecraft game token", :body => erb(:token_email))
 
     flash[:notice] = "Key sent to #{@email}."
     redirect '/pass', 303
@@ -44,7 +45,11 @@ class Lonecraft < Sinatra::Application
 
       @u = current_user 
 
-      @current = (Game.current && Game.current.player == @u)
+      @current = false
+      
+      @current = (Game.current && Game.current.last_round &&
+                  Game.current.active? && 
+                  Game.current.last_round.user == @u)
       
       if @current
         @mc_server = ENV['GAME_DOMAIN']
@@ -62,18 +67,16 @@ class Lonecraft < Sinatra::Application
       flash[:vaudeville_hook] = "/play/#{params[:token]}"
       redirect '/login', 303
     end
-    @u = current_user 
-
+      
     error 500 unless Game.current
     error 403 unless Game.current.challenge(params[:token]) #TODO: change this to something informative
     #TODO: verify that the person has not played during this Game
     
-    Game.current.token = nil
-    @newround = Round.create(:started => Time.now, :user => @u)
-    Game.current.rounds << @newround
-    Game.current.save
-
-    Bukkit.white_list(@u.mc_name)
+    @u = current_user 
+    @u.mc_name = params[:mc_user] if (params[:mc_user] && params[:mc_user].size > 0)
+    @u.save
+   
+    Game.current.assign(@u)
 
     flash[:notice] = "Success! You are now the active player. Please see the instructions below." 
     redirect '/play', 303

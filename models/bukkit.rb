@@ -4,7 +4,7 @@ class Bukkit
     @commands = ""
     @commands << "rm bukkit/white-list.txt; "
     @commands << "echo \"#{ENV['ADMIN_MCNAME']}\" > bukkit/white-list.txt; "
-    @commands << "echo \"#{@u.mc_name}\" >> bukkit/banned-players.txt; "
+    @commands << "echo \"#{mc_name}\" >> bukkit/banned-players.txt; "
 
     ec2_ssh(@commands)
   end
@@ -27,7 +27,8 @@ class Bukkit
   end
 
   def self.ec2_ssh(commands) #TODO: make this more ruby-like (array of commands instead of string, handle the "; " between each element)
-    system("ssh -i #{ENV['EC2_KEYFILE']} ec2-user@#{ENV['GAME_DOMAIN']} \"#{commands}\"") 
+    system('echo "$EC2_KEYFILE" > ./tmp/ec2.pem; chmod 600 ./tmp/ec2.pem')
+    system("ssh -i ./tmp/ec2.pem ec2-user@#{ENV['GAME_DOMAIN']} \"#{commands}\"") 
   end
 end
 
