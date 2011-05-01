@@ -1,6 +1,6 @@
 Lonecraft is a web app that helps coordinate a special version of the Minecraft multiplayer server. Only one player is allowed in the game at a time, and the webapp portion communicates with the Minecraft server via Splash (http://www.github.com/ckolderup/Splash) and SSH to keep track of which Minecraft user is allowed in the server at any given time.
 
-Lonecraft is a work in progress. Right now it's not secure and probably kind of broken. 
+Lonecraft is a work in progress. Right now it's missing a few key features and hasn't been audited for security or anything.
 
 Things completed:
   - basic user account management
