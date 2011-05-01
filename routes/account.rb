@@ -69,6 +69,11 @@ class Lonecraft < Sinatra::Application
   end
 
   get '/signup' do
+    if User.logged_in?
+      flash[:notice] = "You are already logged in!"
+      redirect '/login'
+    end
+
     haml :signup
   end
 
