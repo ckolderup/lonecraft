@@ -17,9 +17,9 @@
             %a{:href => "/logout"} Logout
         - else
           %li#first 
-            %a{:href => "/signup"} Signup
+            %a{:href => "https://#{ENV['SITE_DOMAIN']}/signup"} Signup
           %li
-            %a{:href => "/login"} Login
+            %a{:href => "https://#{ENV['SITE_DOMAIN']}/login"} Login
 
     #content
       - if flash[:error]

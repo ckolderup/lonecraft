@@ -7,11 +7,11 @@ Things completed:
   - general site pages/navigation established
   - basic game logic (cashing in game tokens, communicating with the minecraft server)
   - nail down game logic through an entire cycle of play
+  - blogging support so you can write about games you've played in and a cohesive story of past games can be viewed
+  - secure Splash communications (requires work on Splash as well)
+  - secure auth
 
 Things to do:
-  - blogging support so you can write about games you've played in and a cohesive story of past games can be viewed
   - admin control panel to manually kickstart games and manage the archive of past games for download
-  - secure auth
-  - secure Splash communications (requires work on Splash as well)
   - "confirm" step on user account signup
   - a lot of style work :)
