@@ -40,6 +40,9 @@ class Lonecraft < Sinatra::Application
 
     @round.story = params[:story]
     @round.save
+
+    flash[:notice] = "Story saved."
+    redirect "/relate/#{params[:round]}", 303
   end
 
   get '/consider' do #TODO: show a complete list of past games
