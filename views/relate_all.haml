@@ -1,4 +1,5 @@
-#rounds
+%ul#rounds
   - for round in @rounds
-    %a{:href => "/relate/#{round.id}", :class => "round"}
-      Round finished on #{round.finished}
+    %li
+      %a{:href => "/relate/#{round.id}", :class => "round"}
+        Round finished on #{round.finished}

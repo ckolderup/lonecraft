@@ -5,9 +5,8 @@ class User
   property :passhash, BCryptHash
   property :mc_name, Text
   property :admin,  Boolean, :default => false
- 
-  has n, :rounds, :through => Resource, :required => false
-  
+
+  has n, :rounds
   def admin?
     return admin
   end
