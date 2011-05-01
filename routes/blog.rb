@@ -56,7 +56,7 @@ class Lonecraft < Sinatra::Application
 
     error 404 unless @game
     
-    @rounds = Round.get(:game => @game)
+    @rounds = @game.rounds
 
     haml :consider_one
   end
