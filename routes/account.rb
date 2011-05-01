@@ -42,7 +42,7 @@ class Lonecraft < Sinatra::Application
   end
 
   post '/account' do #TODO: make this HTTPS
-    unless User.logged_in?
+    unless logged_in?
       flash[:error] = "You must be logged in"
       flash[:vaudeville_hook] = '/account'
       redirect '/login', 303
@@ -69,7 +69,7 @@ class Lonecraft < Sinatra::Application
   end
 
   get '/signup' do
-    if User.logged_in?
+    if logged_in?
       flash[:notice] = "You are already logged in!"
       redirect '/login'
     end

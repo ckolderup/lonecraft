@@ -1,7 +1,7 @@
 class Lonecraft < Sinatra::Application
 
   get '/relate' do
-    unless User.logged_in?
+    unless logged_in?
       flash[:error] = "You must log in or create an account."
       flash[:vaudeville_hook] = '/relate'
       redirect '/login'
@@ -13,7 +13,7 @@ class Lonecraft < Sinatra::Application
   end
 
   get '/relate/:round' do
-    unless User.logged_in? 
+    unless logged_in? 
       flash[:error] = "You must log in or create an account."
       flash[:vaudeville_hook] = "/relate/#{params[:round]}"
       redirect '/login'
@@ -27,7 +27,7 @@ class Lonecraft < Sinatra::Application
   end
 
   post '/relate/:round' do
-    unless User.logged_in?
+    unless logged_in?
       flash[:error] = "You must log in or create an account."
       flash[:vaudeville_hook] = "/relate/#{params[:round]}"
       redirect '/login', 303
