@@ -2,9 +2,9 @@
   - for round in @rounds
     #round
       #player
-        #{round.user.mc_name}
+        #{round.try(:user).try(:mc_name)}
       #time
-        Started #{round.started}; finished #{round.finished}
+        Started #{round.try(:started)}; finished #{round.try(:finished)}
       #story
-        #{round.story || "No story for this round yet"}
+        #{round.try(:story) || "No story for this round yet"}
 
