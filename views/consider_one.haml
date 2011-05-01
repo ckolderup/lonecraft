@@ -6,5 +6,5 @@
       #time
         Started #{round.try(:started)}; finished #{round.try(:finished)}
       #story
-        #{round.try(:story) || "No story for this round yet"}
+        #{Redcarpet.new(round.try(:story)||"").try(:to_html) || "No story for this round yet"}
 

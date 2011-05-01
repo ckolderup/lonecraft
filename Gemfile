@@ -1,4 +1,4 @@
-source :gemcutter
+source :gemcutter, :github
 gem "rack"
 gem "rack-flash"
 gem "sinatra"
@@ -9,3 +9,4 @@ gem "haml"
 gem "json"
 gem "pony"
 gem "uuidtools"
+gem "redcarpet"
