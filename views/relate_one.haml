@@ -3,6 +3,7 @@
 %form{:action => "/relate/#{params[:round]}", :method => "POST"}
   .form-item
     %textarea{:id => "story", :name => "story"}
+      #{@round.story}
   .form-item
     %input{:value => "Save story", :type => "submit", :class => "button"}
 
