@@ -26,7 +26,7 @@ class Lonecraft < Sinatra::Application
     haml :relate_one
   end
 
-  post '/relate/:round'
+  post '/relate/:round' do
     unless User.logged_in?
       flash[:error] = "You must log in or create an account."
       flash[:vaudeville_hook] = "/relate/#{params[:round]}"
