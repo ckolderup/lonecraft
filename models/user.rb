@@ -6,7 +6,7 @@ class User
   property :mc_name, Text
   property :admin,  Boolean, :default => false
  
-  belongs_to :round, :required => false
+  has n, :round, :required => false
   
   def admin?
     return admin
