@@ -45,10 +45,20 @@ class Lonecraft < Sinatra::Application
     redirect "/relate/#{params[:round]}", 303
   end
 
-  get '/consider' do #TODO: show a complete list of past games
+  get '/consider' do
+    @games = Game.all
+
+    haml :consider_all
   end
 
-  get '/consider/:game' do #TODO: show a game's journal
+  get '/consider/:game' do
+    @game = Game.get(params[:game])
+
+    error 404 unless @game
+    
+    @rounds = Round.get(:game => @game)
+
+    haml :consider_one
   end
 
 end

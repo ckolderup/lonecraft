@@ -1,0 +1,10 @@
+#rounds
+  - for round in @rounds
+    #round
+      #player
+        #{round.user.mc_name}
+      #time
+        Started #{round.started}; finished #{round.finished}
+      #story
+        #{round.story || "No story for this round yet"}
+

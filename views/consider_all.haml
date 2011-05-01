@@ -1,0 +1,5 @@
+#games
+  - for game in @games
+    %h2#game
+      %a
+        Game ##{game.id}, #{game.first_round.started} - #{game.finished?? game.last_round.finished : "Ongoing"}
