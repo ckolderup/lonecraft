@@ -1,0 +1,8 @@
+#wut Here's a helpful explanation of what's going on! You can use Markdown and stuff if you want, I guess, no big deal
+
+%form{:action => "/relate/#{params[:round]}", :method => "POST"}
+  .form-item
+    %textarea{:id => "story", :name => "story"}
+  .form-item
+    %input{:value => "Save story", :type => "submit", :class => "button"}
+
