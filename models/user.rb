@@ -6,7 +6,7 @@ class User
   property :mc_name, Text
   property :admin,  Boolean, :default => false
  
-  has n, :round, :required => false
+  has n, :rounds, :through => Resource, :required => false
   
   def admin?
     return admin

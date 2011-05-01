@@ -5,6 +5,6 @@ class Round
   property :finished, DateTime
   property :story, Text
   belongs_to :game
-  has 1, :user
+  has 1, :user, :through => Resource
 end 
 
