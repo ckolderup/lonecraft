@@ -19,7 +19,7 @@ class Lonecraft < Sinatra::Application
     haml :login
   end
 
-  post '/login' do #TODO: make this HTTPS
+  post '/login' do
     if user = User.authenticate(params[:email], params[:password])
       session[:u_id] = user.id
       redirect flash[:vaudeville_hook]||'/account', 303
@@ -41,7 +41,7 @@ class Lonecraft < Sinatra::Application
     haml :account
   end
 
-  post '/account' do #TODO: make this HTTPS
+  post '/account' do
     unless logged_in?
       flash[:error] = "You must be logged in"
       flash[:vaudeville_hook] = '/account'
@@ -77,7 +77,7 @@ class Lonecraft < Sinatra::Application
     haml :signup
   end
 
-  post '/signup' do #TODO: make this HTTPS
+  post '/signup' do
     unless params[:password].eql? params[:password2]
       flash[:error] = "Passwords did not match. Try again."
       redirect '/signup', 303

@@ -2,7 +2,7 @@ class Lonecraft < Sinatra::Application
   post '/api/player/join' do
   end
 
-  post '/api/player/death' do #TODO: secure, token-based auth
+  post '/api/player/death' do
     error 400 unless params[:secret] 
     error 403 unless ENV['SPLASH_KEY'] == params[:secret]
     
