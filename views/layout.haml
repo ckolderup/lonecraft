@@ -7,7 +7,7 @@
     #header
       #logo
         %a{:href => "/"} Lonecraft
-      %ul#nav
+      %ul.nav
         - if logged_in?
           %li#first
             %a{:href => "/play"} Got a token?
@@ -30,3 +30,11 @@
           = flash[:notice]
 
       =yield
+
+  #footer
+    %ul.nav
+      %li#first
+        %a{:href => "mailto:admin@lonecraft.com"} Contact
+      %li
+        %a{:href => "/about"} About
+

@@ -4,7 +4,7 @@ body
   background-color: #145414
 
 #header
-  font-family: sans-serif
+  font: 18px sans-serif
   color: #fff
   a
     color: #fff
@@ -14,29 +14,38 @@ body
     float: left
     left: 10px
     position: relative
-  #nav
+  .nav
     float: right
-    display: inline
     right: 10px
-    position: relative
-    margin: 0
-    li
-      list-style: none
-      display: inline
-    li:before
-      content: " - "
-    li#first:before
-      content: " "
+
+#footer
+  font: 14px sans-serif
+  color: #fff
+  margin-top: 5px
+  a
+    color: #fff
+  .nav
+    text-align: center
+
+.nav
+  position: relative
+  margin: 0
+  list-style: none
+  li
+    display: inline
+  li:before
+    content: " - "
+  li#first:before
+    content: " "
 
 #content
   top: $nav_height
   margin-top: 25px
-  width: 800px
   background-color: #fff
   color: #000
-  left: 50px
+  margin-left: 50px
+  margin-right: 50px
   padding: 20px
-  position: absolute
 
   div
     margin-bottom: 20px
