@@ -50,15 +50,15 @@ class Lonecraft < Sinatra::Application
 
     @u = current_user 
 
-    @u.mc_name = params[:mc_name] unless params[:mc_name].nil?
-    @u.email = params[:email] unless params[:email].nil?
-    
-    unless params[:password].nil?
+    begin
+      @u.mc_name = params[:mc_name] unless params[:mc_name].nil?
+      @u.email = params[:email] unless params[:email].nil?
       unless params[:password] == params[:password2]
-        flash[:error] = "Passwords did not match. Try again."
-        redirect '/account', 303
+        raise ArgumentError, "Passwords did not match. Try again."
       end
-      @u.password = params[:password]
+    rescue ArgumentError => e
+      flash[:error] = e.message
+      redirect '/account', 303
     end
 
     error 400 unless @u.valid?
@@ -78,19 +78,17 @@ class Lonecraft < Sinatra::Application
   end
 
   post '/signup' do
-    unless params[:password].eql? params[:password2]
-      flash[:error] = "Passwords did not match. Try again."
-      redirect '/signup', 303
-    end
+    @u = User.new
 
-    @u = User.new :email => params[:email],
-                  :password => params[:password]
-    @u.mc_name = params[:mc_name] unless params[:mc_name].nil?
-
-    unless @u.valid?
-      @u.errors.each do |e|
-        puts e
+    begin
+      @u.email = params[:email]
+      @u.mc_name = params[:mc_name] unless params[:mc_name].nil?
+      unless params[:password] == params[:password2]
+        raise ArgumentError, "Passwords did not match. Try again."
       end
+    rescue ArgumentError => e
+      flash[:error] = e.message
+      redirect '/signup', 303
     end
 
     error 400 unless @u.valid?

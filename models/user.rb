@@ -16,6 +16,16 @@ class User
     self.passhash = BCrypt::Password.create(@password, :cost=> 10)
   end
 
+  def mc_name=(new_mc_name)
+    raise ArgumentError, "Your Minecraft username must be made up of letters, numbers, and underscores only." unless new_mc_name.match(/^[A-Z0-9_]+$/i)
+    super
+  end
+
+  def email=(new_email)
+    raise ArgumentError, "Invalid email address." unless new_email.match(/^[A-Z0-9._%+-]+@(?:[A-Z0-9-]+\.)+[A-Z]{2,4}$/i)
+    super
+  end
+
   def self.authenticate(email, pass)
     user = User.first(:email => email)
     return nil if user.nil?
